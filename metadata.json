@@ -1,0 +1,6 @@
+{
+  "name": "Student Pulse AI",
+  "description": "AI-powered academic productivity app with study planner, mood tracker, assignment manager, notes summarizer, and chat assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

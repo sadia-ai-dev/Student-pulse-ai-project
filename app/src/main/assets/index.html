@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Student Pulse AI - Smart Academic & Wellness Assistant</title>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span class="pulse-ring"></span>
+        </div>
+        <div class="brand-text">
+          <h1>Student Pulse <span class="badge-ai">AI</span></h1>
+          <p class="tagline">Your Academic Companion & Mindful Study Partner</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <button id="btn-quick-breathe" class="btn-pulse-action" title="Quick Stress Relief">
+          <i class="fa-solid fa-wind"></i> <span class="btn-text">Breathe (2 min)</span>
+        </button>
+        <button id="btn-settings" class="btn-icon" title="API & App Settings">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+        <div class="time-widget">
+          <span id="header-time">12:00 PM</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace with Sidebar Navigation -->
+    <div class="main-workspace">
+      <!-- Sidebar Navigation -->
+      <nav class="app-sidebar">
+        <div class="nav-links">
+          <button class="nav-btn active" data-tab="tab-dashboard">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-btn" data-tab="tab-ai-chat">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>AI Assistant</span>
+          </button>
+          <button class="nav-btn" data-tab="tab-planner">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Study Planner</span>
+          </button>
+          <button class="nav-btn" data-tab="tab-mood">
+            <i class="fa-solid fa-face-smile-beam"></i>
+            <span>Mood Tracker</span>
+          </button>
+          <button class="nav-btn" data-tab="tab-assignments">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Assignments</span>
+          </button>
+          <button class="nav-btn" data-tab="tab-notes">
+            <i class="fa-solid fa-file-invoice"></i>
+            <span>Notes Generator</span>
+          </button>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="pulse-score-card">
+            <div class="score-label">Academic Health Pulse</div>
+            <div class="score-val-row">
+              <span id="sidebar-pulse-score" class="score-val">92</span>
+              <span class="score-unit">/100</span>
+            </div>
+            <div class="score-progress-bar">
+              <div id="sidebar-score-fill" class="score-fill" style="width: 92%;"></div>
+            </div>
+            <div id="sidebar-pulse-status" class="score-subtitle">✨ Balanced & On Track</div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content Views Container -->
+      <main class="content-area">
+        
+        <!-- SECTION 1: DASHBOARD VIEW -->
+        <section id="tab-dashboard" class="tab-view active">
+          <div class="welcome-banner">
+            <div class="banner-text">
+              <h2 id="dash-greeting">Hi Sadia Ashraf 👋</h2>
+              <p>You have <strong id="dash-due-count">3 upcoming deadlines</strong> this week. Stay focused and keep your momentum!</p>
+            </div>
+            <div class="banner-actions">
+              <button class="btn-primary" id="dash-start-study">
+                <i class="fa-solid fa-play"></i> Start 25m Focus Session
+              </button>
+            </div>
+          </div>
+
+          <!-- Summary Metric Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card bg-gradient-blue">
+              <div class="card-icon"><i class="fa-solid fa-book-open"></i></div>
+              <div class="card-info">
+                <span class="metric-val" id="dash-assignments-pending">4</span>
+                <span class="metric-title">Active Assignments</span>
+              </div>
+            </div>
+            <div class="metric-card bg-gradient-purple">
+              <div class="card-icon"><i class="fa-solid fa-clock"></i></div>
+              <div class="card-info">
+                <span class="metric-val" id="dash-study-hours">14.5 hrs</span>
+                <span class="metric-title">Studied This Week</span>
+              </div>
+            </div>
+            <div class="metric-card bg-gradient-indigo">
+              <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+              <div class="card-info">
+                <span class="metric-val" id="dash-current-mood">Motivated 🚀</span>
+                <span class="metric-title">Today's Mood</span>
+              </div>
+            </div>
+            <div class="metric-card bg-gradient-teal">
+              <div class="card-icon"><i class="fa-solid fa-trophy"></i></div>
+              <div class="card-info">
+                <span class="metric-val" id="dash-streak-count">5 Days</span>
+                <span class="metric-title">Study Streak</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Column Dashboard Content -->
+          <div class="dashboard-grid">
+            <!-- Left Column: Upcoming Deadlines & AI Quick Assistant -->
+            <div class="grid-col">
+              <div class="panel-card">
+                <div class="panel-header">
+                  <h3><i class="fa-solid fa-calendar-day"></i> Upcoming Deadlines</h3>
+                  <button class="btn-text" id="dash-view-assignments">View All</button>
+                </div>
+                <div class="assignment-list" id="dash-upcoming-list">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </div>
+
+              <div class="panel-card mt-4">
+                <div class="panel-header">
+                  <h3><i class="fa-solid fa-brain"></i> AI Study Prompt Quick Bar</h3>
+                </div>
+                <div class="quick-prompts">
+                  <button class="prompt-chip" data-prompt="Give me 3 memory tricks for studying biology terms">🧬 Memory Tricks for Bio</button>
+                  <button class="prompt-chip" data-prompt="How do I overcome study procrastination right now?">⚡ Beat Procrastination</button>
+                  <button class="prompt-chip" data-prompt="Create a 3-step review plan for an upcoming exam">📝 3-Step Exam Plan</button>
+                  <button class="prompt-chip" data-prompt="Explain the Feynman Technique in simple steps">💡 Feynman Technique</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Mood & Wellness Snapshot + Study Timer Widget -->
+            <div class="grid-col">
+              <div class="panel-card">
+                <div class="panel-header">
+                  <h3><i class="fa-solid fa-hourglass-half"></i> Active Focus Timer</h3>
+                </div>
+                <div class="mini-timer-display">
+                  <div class="timer-circle-mini">
+                    <span id="dash-mini-timer">25:00</span>
+                    <small id="dash-mini-mode">Focus Mode</small>
+                  </div>
+                  <div class="timer-controls">
+                    <button id="dash-timer-toggle" class="btn-primary btn-round"><i class="fa-solid fa-play"></i></button>
+                    <button id="dash-timer-reset" class="btn-secondary btn-round"><i class="fa-solid fa-rotate-left"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel-card mt-4">
+                <div class="panel-header">
+                  <h3><i class="fa-solid fa-lightbulb"></i> Daily Wellness Tip</h3>
+                </div>
+                <div class="wellness-tip-box" id="dash-wellness-tip">
+                  <i class="fa-solid fa-quote-left tip-quote"></i>
+                  <p id="tip-text">Taking a 5-minute break every 25 minutes restores cognitive focus and reduces stress levels by 40% during long study blocks.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: AI CHAT ASSISTANT -->
+        <section id="tab-ai-chat" class="tab-view">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-robot"></i> AI Study Assistant</h2>
+              <p>Ask questions, generate practice quizzes, clarify complex topics, or debug assignments.</p>
+            </div>
+            <div class="view-actions">
+              <button id="btn-clear-chat" class="btn-secondary"><i class="fa-solid fa-trash-can"></i> Clear History</button>
+            </div>
+          </div>
+
+          <div class="chat-wrapper">
+            <div class="chat-messages" id="chat-container">
+              <div class="message message-ai">
+                <div class="avatar-ai"><i class="fa-solid fa-sparkles"></i></div>
+                <div class="message-content">
+                  <p>Hello! I'm your <strong>Student Pulse AI Assistant</strong>. How can I help with your studies today?</p>
+                  <div class="chat-suggestion-chips">
+                    <button class="chip-action" data-text="Can you explain the law of diminishing returns in economics with an example?">📊 Economics Example</button>
+                    <button class="chip-action" data-text="Help me structure an outline for an essay on Climate Change policy.">📝 Essay Outline</button>
+                    <button class="chip-action" data-text="Generate 5 multiple-choice questions on Data Structures and Algorithms.">💻 CS Quiz</button>
+                    <button class="chip-action" data-text="Give me study strategies for an upcoming Physics midterm.">🔭 Physics Study Tips</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-input-area">
+              <div class="input-row">
+                <textarea id="chat-input" placeholder="Ask anything about your courses, homework, or study strategies..." rows="2"></textarea>
+                <button id="chat-voice-btn" class="btn-icon" title="Voice Input"><i class="fa-solid fa-microphone"></i></button>
+                <button id="chat-send-btn" class="btn-primary"><i class="fa-solid fa-paper-plane"></i> Send</button>
+              </div>
+              <div class="chat-footer-note">
+                <span>Powered by Gemini AI. Safe, private, and tailored for university learning.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: SMART STUDY PLANNER -->
+        <section id="tab-planner" class="tab-view">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-calendar-check"></i> Smart Study Planner</h2>
+              <p>Organize subject schedules, track study sessions, and lock in with ambient focus music.</p>
+            </div>
+            <button class="btn-primary" id="btn-add-subject"><i class="fa-solid fa-plus"></i> Add Subject</button>
+          </div>
+
+          <div class="planner-grid">
+            <!-- Left: Pomodoro Timer & Ambient Sounds -->
+            <div class="planner-card focus-section">
+              <h3><i class="fa-solid fa-stopwatch"></i> Focus & Pomodoro Engine</h3>
+              
+              <div class="timer-mode-selector">
+                <button class="timer-tab active" data-minutes="25" data-mode="Focus">Focus (25m)</button>
+                <button class="timer-tab" data-minutes="5" data-mode="Short Break">Short Break (5m)</button>
+                <button class="timer-tab" data-minutes="15" data-mode="Long Break">Long Break (15m)</button>
+              </div>
+
+              <div class="main-timer-ring">
+                <svg class="progress-ring" width="220" height="220">
+                  <circle class="progress-ring-bg" stroke="#E2E8F0" stroke-width="12" fill="transparent" r="90" cx="110" cy="110"/>
+                  <circle id="timer-progress-circle" class="progress-ring-fill" stroke="#4F46E5" stroke-width="12" stroke-linecap="round" fill="transparent" r="90" cx="110" cy="110"/>
+                </svg>
+                <div class="timer-text-overlay">
+                  <span id="main-timer-time">25:00</span>
+                  <span id="main-timer-label" class="timer-status-tag">Focus Time</span>
+                </div>
+              </div>
+
+              <div class="timer-main-controls">
+                <button id="btn-main-timer-toggle" class="btn-primary btn-large"><i class="fa-solid fa-play"></i> Start Session</button>
+                <button id="btn-main-timer-reset" class="btn-secondary btn-large"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+              </div>
+
+              <!-- Ambient Audio Player -->
+              <div class="ambient-audio-box">
+                <h4><i class="fa-solid fa-headphones"></i> Focus Sound Generator</h4>
+                <div class="sound-buttons">
+                  <button class="sound-btn" data-sound="rain"><i class="fa-solid fa-cloud-rain"></i> Gentle Rain</button>
+                  <button class="sound-btn" data-sound="lofi"><i class="fa-solid fa-music"></i> Lo-Fi Synth</button>
+                  <button class="sound-btn" data-sound="waves"><i class="fa-solid fa-water"></i> Ocean Waves</button>
+                  <button class="sound-btn" data-sound="birds"><i class="fa-solid fa-tree"></i> Forest Ambience</button>
+                </div>
+                <div class="volume-slider-row">
+                  <i class="fa-solid fa-volume-high"></i>
+                  <input type="range" id="sound-volume" min="0" max="100" value="50">
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Course Subject Cards & Exam Timeline -->
+            <div class="planner-card">
+              <h3><i class="fa-solid fa-book-bookmark"></i> Enrolled Subjects & Progress</h3>
+              <div class="subjects-list" id="subjects-container">
+                <!-- Populated via JS -->
+              </div>
+
+              <h3 class="mt-4"><i class="fa-solid fa-calendar-days"></i> Exam & Quiz Schedule</h3>
+              <div class="exams-schedule-list" id="exams-container">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: MOOD & WELLNESS TRACKER -->
+        <section id="tab-mood" class="tab-view">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-face-smile-beam"></i> Mood & Stress Tracker</h2>
+              <p>Log your current emotional state to get instant personalized wellness routines and stress reducers.</p>
+            </div>
+          </div>
+
+          <div class="mood-selection-card">
+            <h3>How are you feeling right now?</h3>
+            <div class="mood-btn-group">
+              <button class="mood-option" data-mood="Happy" data-icon="😄" data-color="#10B981">
+                <span class="emoji">😄</span>
+                <span class="label">Happy</span>
+              </button>
+              <button class="mood-option" data-mood="Motivated" data-icon="🚀" data-color="#8B5CF6">
+                <span class="emoji">🚀</span>
+                <span class="label">Motivated</span>
+              </button>
+              <button class="mood-option active" data-mood="Stressed" data-icon="😰" data-color="#EF4444">
+                <span class="emoji">😰</span>
+                <span class="label">Stressed</span>
+              </button>
+              <button class="mood-option" data-mood="Tired" data-icon="😴" data-color="#F59E0B">
+                <span class="emoji">😴</span>
+                <span class="label">Tired</span>
+              </button>
+              <button class="mood-option" data-mood="Anxious" data-icon="😟" data-color="#EC4899">
+                <span class="emoji">😟</span>
+                <span class="label">Anxious</span>
+              </button>
+              <button class="mood-option" data-mood="Focused" data-icon="🎯" data-color="#3B82F6">
+                <span class="emoji">🎯</span>
+                <span class="label">Focused</span>
+              </button>
+            </div>
+
+            <div class="mood-journal-input mt-3">
+              <input type="text" id="mood-note-input" placeholder="Add a short note about why you feel this way (e.g. 'Calculus midterm tomorrow')...">
+              <button class="btn-primary" id="btn-save-mood"><i class="fa-solid fa-bookmark"></i> Save Entry</button>
+            </div>
+          </div>
+
+          <!-- Dynamic AI Mood Suggestion Box -->
+          <div class="suggestion-panel mt-4" id="mood-suggestion-card">
+            <div class="suggestion-header">
+              <i class="fa-solid fa-heart-pulse suggestion-icon"></i>
+              <div>
+                <h3 id="suggestion-title">AI Recommendation for Stressed State</h3>
+                <span class="suggestion-badge">Psychology-Backed Advice</span>
+              </div>
+            </div>
+            <div class="suggestion-body" id="suggestion-content">
+              <p>You're experiencing high stress. Let's reset your mental load:</p>
+              <ul class="suggestion-checklist">
+                <li><i class="fa-solid fa-circle-check"></i> Try the <strong>2-minute 4-7-8 Box Breathing</strong> exercise to lower heart rate immediately.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Break down your biggest task into a 15-minute micro-chunk.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Drink a glass of water and listen to gentle rain ambience.</li>
+              </ul>
+            </div>
+            <div class="suggestion-actions">
+              <button class="btn-primary" id="btn-launch-breathing-exercise"><i class="fa-solid fa-lungs"></i> Start Guided Box Breathing</button>
+            </div>
+          </div>
+
+          <!-- Mood Log History Table -->
+          <div class="panel-card mt-4">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-clock-rotate-left"></i> Mood Journal History</h3>
+            </div>
+            <div id="mood-history-list" class="mood-history-container">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: ASSIGNMENT & DEADLINE TRACKER -->
+        <section id="tab-assignments" class="tab-view">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-list-check"></i> Assignment & Deadline Tracker</h2>
+              <p>Never miss a deadline. Organize by subject, priority, and completion status.</p>
+            </div>
+            <button class="btn-primary" id="btn-open-assignment-modal"><i class="fa-solid fa-plus"></i> New Assignment</button>
+          </div>
+
+          <!-- Filter & Control Toolbar -->
+          <div class="toolbar-card">
+            <div class="filter-group">
+              <label>Filter Status:</label>
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="todo">To Do</button>
+              <button class="filter-btn" data-filter="in_progress">In Progress</button>
+              <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+            <div class="sort-group">
+              <label>Sort By:</label>
+              <select id="sort-assignments-select">
+                <option value="dueDate">Due Date (Earliest)</option>
+                <option value="priority">Priority (High to Low)</option>
+                <option value="subject">Subject</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Assignment List Grid -->
+          <div class="assignments-grid" id="full-assignments-list">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- SECTION 6: NOTES GENERATOR (TEXT SUMMARIZER) -->
+        <section id="tab-notes" class="tab-view">
+          <div class="view-header">
+            <div>
+              <h2><i class="fa-solid fa-file-invoice"></i> Smart Notes Generator</h2>
+              <p>Paste long lecture transcripts, textbook passages, or articles to generate crisp, actionable summaries & flashcards.</p>
+            </div>
+          </div>
+
+          <div class="notes-workspace-grid">
+            <!-- Input Area -->
+            <div class="notes-card">
+              <h3><i class="fa-solid fa-file-lines"></i> Input Source Material</h3>
+              <textarea id="notes-input-text" placeholder="Paste textbook chapter, lecture recording transcript, or article content here (min 50 words)..." rows="12"></textarea>
+              
+              <div class="notes-options-row">
+                <div class="option-field">
+                  <label>Summary Style:</label>
+                  <select id="notes-style-select">
+                    <option value="bullets">Bullet Point Key Takeaways</option>
+                    <option value="flashcards">Study Flashcards (Front/Back)</option>
+                    <option value="simplified">5th Grader Explanation (Simple)</option>
+                    <option value="executive">Executive Summary & Formulas</option>
+                  </select>
+                </div>
+                <button class="btn-primary btn-large" id="btn-generate-notes">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Smart Notes
+                </button>
+              </div>
+            </div>
+
+            <!-- Output Display Area -->
+            <div class="notes-card">
+              <div class="panel-header">
+                <h3><i class="fa-solid fa-sparkles"></i> Output Notes & Summary</h3>
+                <div class="output-actions">
+                  <button id="btn-copy-notes" class="btn-secondary btn-sm" title="Copy to clipboard"><i class="fa-solid fa-copy"></i> Copy</button>
+                  <button id="btn-download-notes" class="btn-secondary btn-sm" title="Download Text File"><i class="fa-solid fa-download"></i> Download</button>
+                </div>
+              </div>
+
+              <div id="notes-output-container" class="notes-output-content">
+                <div class="empty-state">
+                  <i class="fa-solid fa-pen-nib empty-icon"></i>
+                  <p>Your generated notes, flashcards, and summary will appear here!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL 1: ADD ASSIGNMENT MODAL -->
+  <div id="modal-assignment" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-plus"></i> Add New Assignment</h3>
+        <button class="modal-close" id="close-assignment-modal">&times;</button>
+      </div>
+      <form id="form-add-assignment" class="modal-body">
+        <div class="form-group">
+          <label for="assign-title">Assignment Title *</label>
+          <input type="text" id="assign-title" placeholder="e.g. Organic Chemistry Problem Set 4" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="assign-subject">Subject *</label>
+            <select id="assign-subject" required>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="History">History</option>
+              <option value="Economics">Economics</option>
+              <option value="General Study">General Study</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="assign-due">Due Date *</label>
+            <input type="date" id="assign-due" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="assign-priority">Priority</label>
+            <select id="assign-priority">
+              <option value="High">🔴 High Priority</option>
+              <option value="Medium" selected>🟡 Medium Priority</option>
+              <option value="Low">🟢 Low Priority</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="assign-hours">Est. Hours</label>
+            <input type="number" id="assign-hours" min="0.5" step="0.5" value="2.0">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancel-assignment-modal">Cancel</button>
+          <button type="submit" class="btn-primary">Save Assignment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: 4-7-8 GUIDED BOX BREATHING EXERCISE -->
+  <div id="modal-breathing" class="modal-backdrop">
+    <div class="modal-card modal-center text-center">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-lungs"></i> Guided 4-7-8 Box Breathing</h3>
+        <button class="modal-close" id="close-breathing-modal">&times;</button>
+      </div>
+      <div class="modal-body breathing-body">
+        <p class="breathing-desc">Follow the circle animation. Inhale through your nose, hold, then exhale slowly.</p>
+
+        <div class="breathing-circle-wrapper">
+          <div id="breathing-anim-circle" class="breathing-circle">
+            <span id="breathing-instruction">Get Ready...</span>
+            <span id="breathing-timer-count">3</span>
+          </div>
+        </div>
+
+        <div class="breathing-controls mt-4">
+          <button id="btn-breathing-toggle" class="btn-primary"><i class="fa-solid fa-play"></i> Start Cycle</button>
+          <button id="btn-breathing-close" class="btn-secondary">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: APP SETTINGS / API KEY -->
+  <div id="modal-settings" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-gear"></i> Student Pulse AI Settings</h3>
+        <button class="modal-close" id="close-settings-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="user-gemini-key">Custom Gemini API Key (Optional)</label>
+          <input type="password" id="user-gemini-key" placeholder="AI Studio Key is auto-detected. Paste custom key if needed...">
+          <small class="help-text">Leave blank to use pre-configured AI Studio runtime key or built-in AI response generator.</small>
+        </div>
+        <div class="form-group">
+          <label>Data Management:</label>
+          <button id="btn-reset-sample-data" class="btn-secondary"><i class="fa-solid fa-rotate-right"></i> Reset Default Sample Data</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" id="save-settings-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
